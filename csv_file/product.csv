@@ -1,0 +1,46 @@
+ClassId,CategoryId,Product,SubProduct,Description,BetOrPlay
+22522_SALE,22522,Vegas,Vegas Bonus,Vegas,0
+BETC_RET,0,Sportsbook,Various,Bet Corrections,0
+BONS_GAM,0,Games,Games Bonus,Games Bonus,0
+BONS_SPRB,0,Sportsbook,SB Bonus,SB Bonus,0
+BONS_VEGA,0,Vegas,Vegas Bonus,Vegas Bonus,0
+CSH_PPAL,0,Adjustments,Banking Correction,PayPal,0
+GWIL_SPRT,0,Sportsbook,Goodwill Payments,Goodwill Payments,0
+1,5,Sportsbook,Football,UK Football,1
+10,16,Sportsbook,Other Sports,Boxing,1
+15,2,Sportsbook,Baseball,Baseball,1
+182,0,Games,FReactor,FReactor,1
+19,1,Sportsbook,American Football,American Football,1
+2,9,Sportsbook,Horse Racing,Horse Racing - Live,1
+22508_RTNS,22508,Bingo,Bingo VF,Bingo VF Returns,1
+22508_STKE,22508,Bingo,Bingo VF,Bingo VF Stakes,1
+22512_XFER,22512,Vegas,Vegas,Vegas Transfers,1
+22527_PRCH,22527,Poker,Poker Playtech CashIn,Poker Playtech,1
+22527_SALE,22527,Poker,Poker Playtech CashOut,Poker Playtech,1
+22528_PRCH,22528,Casino,Casino Playtech CashIn,Casino Playtech,1
+22528_SALE,22528,Casino,Casino Playtech CashOut,Casino Playtech,1
+273,3,Sportsbook,Basketball,European Basketball,1
+274,5,Sportsbook,Football,Other League Football,1
+275,5,Sportsbook,Football,UEFA Club Competitions,1
+3,8,Sportsbook,Greyhounds,Greyhounds - Live,1
+323,9,Sportsbook,Horse Racing,Horse Racing - Specials,1
+325,13,Sportsbook,Rugby League,Rugby League,1
+36,5,Sportsbook,Football,International Football,1
+38,9,Sportsbook,Horse Racing,Horse Racing - Tote Pools,1
+385,6,Sportsbook,Golf,Golf Specials,1
+40,6,Sportsbook,Golf,Mens Golf,1
+42,4,Sportsbook,Cricket,International Cricket,1
+424,17,Sportsbook,Tennis,Challenger Tennis,1
+434,0,Games,Games tbc,Games tbc,1
+45,17,Sportsbook,Tennis,Grand Slam Tennis,1
+452,0,Games,Games tbc,Games tbc,1
+453,0,Games,Games tbc,Games tbc,1
+46,5,Sportsbook,Football,European Major Leagues,1
+5,11,Sportsbook,Motor Racing,Formula 1,1
+579,0,Games,Games tbc,Games tbc,1
+601,0,Games,Games tbc,Games tbc,1
+612,0,Games,Games tbc,Games tbc,1
+613,0,Games,Games tbc,Games tbc,1
+616,0,Games,Games tbc,Games tbc,1
+635,0,Games,Games tbc,Games tbc,1
+638,0,Games,Games tbc,Games tbc,1
