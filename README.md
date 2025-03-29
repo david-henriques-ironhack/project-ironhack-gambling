@@ -30,7 +30,7 @@ You have been given access to four critical database tables of the IronHack Gamb
 - **Free form analysis**: the extra mile in this project is doing an EDA to point out interesting avenues of exploration for this dataset. Where are the large pools of money? What are profitable periods? Can we segment our customers? Present a few insights that you were able to glean during your manipulation of the data.
 
 
-## Tips to Participate
+## Tips
 
 - Write or type your SQL answers for each question in a document.
 - Feel free to use a separate editor to draft your queries before pasting them here.
