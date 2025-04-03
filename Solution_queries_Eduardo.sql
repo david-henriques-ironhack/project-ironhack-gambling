@@ -131,5 +131,78 @@ GROUP BY 1,2,3,4;
 
 -- **Question 08**: Our marketing and CRM teams want to measure the number of players who play more than one product. Can you please write 2 queries, one that shows the number of products per player and another that shows players who play both Sportsbook and Vegas.
 
+SELECT
+customer.CustId,
+COUNT(DISTINCT product.product) AS ProductCount
+FROM customer
+LEFT JOIN account
+ON customer.CustId = account.CustId
+LEFT JOIN betting
+ON account.AccountNo = betting.AccountNo
+LEFT JOIN product
+ON (betting.ClassId = product.ClassId AND betting.CategoryId = product.CategoryId)
+GROUP BY customer.CustId
+HAVING COUNT(DISTINCT product.product) > 1;
+
+
+SELECT
+customer.CustId,
+COUNT(DISTINCT product.product) AS ProductCount
+FROM customer
+LEFT JOIN account
+ON customer.CustId = account.CustId
+LEFT JOIN betting
+ON account.AccountNo = betting.AccountNo
+LEFT JOIN product
+ON (betting.ClassId = product.ClassId AND betting.CategoryId = product.CategoryId)
+WHERE product.Product IN ('Vegas','Sportsbook')
+GROUP BY customer.CustId
+HAVING COUNT(DISTINCT product.Product) > 1;
+	
+
+-- **Question 09**: Now our CRM team want to look at players who only play one product, please write SQL code that shows the players who only play at sportsbook, use the bet_amt > 0 as the key. Show each player and the sum of their bets for both products. 
+
+SELECT
+customer.CustId,
+product.Product,
+ROUND(SUM(Bet_Amt),2) AS BetAmt
+FROM customer
+LEFT JOIN account
+ON customer.CustId = account.CustId
+LEFT JOIN betting
+ON account.AccountNo = betting.AccountNo
+LEFT JOIN product
+ON (betting.ClassId = product.ClassId AND betting.CategoryId = product.CategoryId)
+WHERE product.Product = 'Sportsbook'
+GROUP BY customer.CustId
+HAVING COUNT(DISTINCT product.Product) = 1
+AND ROUND(SUM(Bet_Amt),2) > 0;
+
+
+-- **Question 10**: The last question requires us to calculate and determine a player’s favourite product. This can be determined by the most money staked. 
+SELECT * FROM account;
+
+WITH RankedBets AS (
+SELECT
+    account.CustId,
+	product.Product,
+    account.StakeScale,
+    ROW_NUMBER() OVER (PARTITION BY account.CustId ORDER BY account.StakeScale DESC) AS rn
+FROM account
+LEFT JOIN betting
+ON account.AccountNo = betting.AccountNo
+LEFT JOIN product
+ON (betting.ClassId = product.ClassId AND betting.CategoryId = product.CategoryId)
+WHERE product.Product IS NOT NULL
+)
+SELECT
+*
+FROM
+RankedBets
+WHERE rn =1;
+
+
+
+
 
 
