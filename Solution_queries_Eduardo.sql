@@ -204,6 +204,38 @@ WHERE rn =1;
 
 
 
+-- Extra Metric:
+-- Customer Lifetime Value (CLV)
+-- This metric gives a comprehensive view of a customer’s value to the business over time. It combines:
+--  Total Bet Amount
+--  Total Win Amount
+--  Net Revenue (Bet - Win)
+--  Number of Bets
+--  Products interacted with
+--  Time range of betting activity
 
+SELECT
+    c.CustId,
+    c.FirstName,
+    c.LastName,
+    c.CustomerGroup,
+    SUM(b.BetCount) AS TotalBets,
+    ROUND(SUM(b.Bet_Amt),2) AS TotalBetAmount,
+    ROUND(SUM(b.Win_Amt),2) AS TotalWinAmount,
+    ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) AS NetRevenue,
+    MIN(b.BetDate) AS FirstBetDate,
+    MAX(b.BetDate) AS LastBetDate,
+	MAX(b.BetDate) - MIN(b.BetDate) AS Days_Active,
+	TIMESTAMPDIFF(MONTH, MIN(b.BetDate), MAX(b.BetDate)) AS Months_Active,
+    COUNT(DISTINCT b.Product) AS ProductsUsed
+FROM customer c
+JOIN account a ON c.CustId = a.CustId
+JOIN betting b ON a.AccountNo = b.AccountNo
+GROUP BY
+c.CustId,
+c.FirstName,
+c.LastName,
+c.CustomerGroup
+ORDER BY NetRevenue DESC;
 
 
