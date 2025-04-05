@@ -147,6 +147,7 @@ HAVING COUNT(DISTINCT product.product) > 1;
 
 SELECT
 customer.CustId,
+customer.FirstName,
 COUNT(DISTINCT product.product) AS ProductCount
 FROM customer
 LEFT JOIN account
@@ -158,7 +159,7 @@ ON (betting.ClassId = product.ClassId AND betting.CategoryId = product.CategoryI
 WHERE product.Product IN ('Vegas','Sportsbook')
 GROUP BY customer.CustId
 HAVING COUNT(DISTINCT product.Product) > 1;
-	
+
 
 -- **Question 09**: Now our CRM team want to look at players who only play one product, please write SQL code that shows the players who only play at sportsbook, use the bet_amt > 0 as the key. Show each player and the sum of their bets for both products. 
 
@@ -180,14 +181,14 @@ AND ROUND(SUM(Bet_Amt),2) > 0;
 
 
 -- **Question 10**: The last question requires us to calculate and determine a player’s favourite product. This can be determined by the most money staked. 
-SELECT * FROM account;
+USE ih_gambling;
 
 WITH RankedBets AS (
 SELECT
     account.CustId,
 	product.Product,
-    account.StakeScale,
-    ROW_NUMBER() OVER (PARTITION BY account.CustId ORDER BY account.StakeScale DESC) AS rn
+    betting.Bet_Amt,
+    ROW_NUMBER() OVER (PARTITION BY account.CustId ORDER BY betting.Bet_Amt DESC) AS rn
 FROM account
 LEFT JOIN betting
 ON account.AccountNo = betting.AccountNo
