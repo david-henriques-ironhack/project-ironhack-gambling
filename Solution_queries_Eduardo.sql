@@ -281,3 +281,12 @@ GROUP BY
     c.LastName,
     c.CustomerGroup
 ORDER BY NetRevenue DESC;
+
+
+
+--Segment	Criteria	Reward Idea
+--Power Loyalist	Months_Active >= 6 AND ProductsUsed >= 3	Exclusive bonuses or early access
+--Diverse Explorer	ProductsUsed >= 5	Product-specific promotions
+--Steady Bettor	TotalBets > 100 AND NetRevenue BETWEEN 50 AND 300	Cashback/loyalty points
+--VIP Whale	NetRevenue > 500 AND TotalBets > 200	High-roller VIP tier
+--Reactivation Target	MAX(BetDate) < DATE_SUB(CURDATE(), INTERVAL 1 MONTH)	Win-back offe
