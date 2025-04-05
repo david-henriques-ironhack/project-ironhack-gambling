@@ -289,4 +289,4 @@ ORDER BY NetRevenue DESC;
 --Diverse Explorer	ProductsUsed >= 5	Product-specific promotions
 --Steady Bettor	TotalBets > 100 AND NetRevenue BETWEEN 50 AND 300	Cashback/loyalty points
 --VIP Whale	NetRevenue > 500 AND TotalBets > 200	High-roller VIP tier
---Reactivation Target	MAX(BetDate) < DATE_SUB(CURDATE(), INTERVAL 1 MONTH)	Win-back offe
+--Reactivation Target	MAX(BetDate) < DATE_SUB(CURDATE(), INTERVAL 1 MONTH)	Win-back offer
