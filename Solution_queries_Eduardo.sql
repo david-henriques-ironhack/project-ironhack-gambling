@@ -239,3 +239,45 @@ c.CustomerGroup
 ORDER BY NetRevenue DESC;
 
 
+--Segmentation Strategy: Loyalty Buckets
+--Here's a custom bucketing system based on your values:
+--Segment	Criteria
+--🟩 VIP Whale	NetRevenue > 30000 AND TotalBets > 500
+--🟦 Power Loyalist	Months_Active >= 3 AND ProductsUsed >= 3 AND NetRevenue > 10000
+--🟨 Diverse Explorer	ProductsUsed >= 3 AND NetRevenue < 10000
+--🟧 Steady Bettor	TotalBets BETWEEN 300 AND 500 AND NetRevenue BETWEEN 5000 AND 10000
+--🟥 Reactivation Target	Months_Active = 0 OR Days_Active < 100
+--⚪ Casual User	Doesn't meet other criteria
+
+SELECT
+    c.CustId,
+    c.FirstName,
+    c.LastName,
+    c.CustomerGroup,
+    COUNT(b.AccountNo) AS TotalBets,
+    ROUND(SUM(b.Bet_Amt),2) AS TotalBetAmount,
+    ROUND(SUM(b.Win_Amt),2) AS TotalWinAmount,
+    ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) AS NetRevenue,
+    MIN(b.BetDate) AS FirstBetDate,
+    MAX(b.BetDate) AS LastBetDate,
+    MAX(b.BetDate) - MIN(b.BetDate) AS Days_Active,
+    TIMESTAMPDIFF(MONTH, MIN(b.BetDate), MAX(b.BetDate)) AS Months_Active,
+    COUNT(DISTINCT b.Product) AS ProductsUsed,
+    -- Loyalty Segment Bucket
+    CASE
+        WHEN ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) > 30000 AND COUNT(b.AccountNo) > 500 THEN 'VIP Whale'
+        WHEN TIMESTAMPDIFF(MONTH, MIN(b.BetDate), MAX(b.BetDate)) >= 3 AND COUNT(DISTINCT b.Product) >= 3 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) > 10000 THEN 'Power Loyalist'
+        WHEN COUNT(DISTINCT b.Product) >= 3 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) < 10000 THEN 'Diverse Explorer'
+        WHEN COUNT(b.AccountNo) BETWEEN 300 AND 500 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) BETWEEN 5000 AND 10000 THEN 'Steady Bettor'
+        WHEN TIMESTAMPDIFF(MONTH, MIN(b.BetDate), MAX(b.BetDate)) = 0 OR DATEDIFF(MAX(b.BetDate), MIN(b.BetDate)) < 100 THEN 'Reactivation Target'
+        ELSE 'Casual User'
+    END AS LoyaltySegment
+FROM customer c
+JOIN account a ON c.CustId = a.CustId
+JOIN betting b ON a.AccountNo = b.AccountNo
+GROUP BY
+    c.CustId,
+    c.FirstName,
+    c.LastName,
+    c.CustomerGroup
+ORDER BY NetRevenue DESC;
