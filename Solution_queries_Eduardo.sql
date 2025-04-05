@@ -254,7 +254,7 @@ SELECT
     c.FirstName,
     c.LastName,
     c.CustomerGroup,
-    COUNT(b.AccountNo) AS TotalBets,
+    SUM(b.BetCount) AS TotalBets,
     ROUND(SUM(b.Bet_Amt),2) AS TotalBetAmount,
     ROUND(SUM(b.Win_Amt),2) AS TotalWinAmount,
     ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) AS NetRevenue,
@@ -265,7 +265,7 @@ SELECT
     COUNT(DISTINCT b.Product) AS ProductsUsed,
     -- Loyalty Segment Bucket
     CASE
-        WHEN ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) > 30000 AND COUNT(b.AccountNo) > 500 THEN 'VIP Whale'
+        WHEN ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) > 30000 AND SUM(b.BetCount) > 500 THEN 'VIP Whale'
         WHEN TIMESTAMPDIFF(MONTH, MIN(b.BetDate), MAX(b.BetDate)) >= 3 AND COUNT(DISTINCT b.Product) >= 3 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) > 10000 THEN 'Power Loyalist'
         WHEN COUNT(DISTINCT b.Product) >= 3 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) < 10000 THEN 'Diverse Explorer'
         WHEN COUNT(b.AccountNo) BETWEEN 300 AND 500 AND ROUND(SUM(b.Bet_Amt - b.Win_Amt),2) BETWEEN 5000 AND 10000 THEN 'Steady Bettor'
